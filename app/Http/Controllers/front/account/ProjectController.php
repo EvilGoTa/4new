@@ -41,7 +41,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('front.account.project_create', [
+        ]);
     }
 
     /**

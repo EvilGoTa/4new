@@ -98,6 +98,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="/js/react/react.js"></script>
     <script src="/js/react/react-dom.js"></script>
+    @stack('scripts_bottom')
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>
