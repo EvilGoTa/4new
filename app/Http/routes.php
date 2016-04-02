@@ -40,6 +40,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
+
+    Route::resource('/home/project', 'front\account\ProjectController');
 });
 
 /* Admin panel routes */
