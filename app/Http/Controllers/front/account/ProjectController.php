@@ -4,6 +4,7 @@ namespace App\Http\Controllers\front\account;
 
 use App\Project;
 use App\User;
+use Golonka\BBCode\BBCodeParser;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -16,6 +17,7 @@ class ProjectController extends Controller
         'title' => 'Projects',
         'top_info' => 'Your projects here',
     ];
+    private $redirectTo = '/home/project/';
     /**
      * Display a listing of the resource.
      *
@@ -53,7 +55,17 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $project = new Project;
+        $bb_parser = new BBCodeParser();
+
+        $project->title = $request->title;
+        $project->description = $bb_parser->parse($request->content, true);
+
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+        $user->projects()->save($project);
+
+        return redirect($this->redirectTo);
     }
 
     /**

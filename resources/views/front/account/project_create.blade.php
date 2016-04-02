@@ -31,9 +31,17 @@
                         <div class="form-group">
                             <label for="content" class="col-sm-3 control-label">Содержание</label>
                         </div>
-                        {{--<div class="col-sm-6">--}}
+                        <div class="form-group" style="padding: 0px 20px">
                             <textarea name="content" id="project-content" style="width: 100%; height: 400px"></textarea>
-                        {{--</div>--}}
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-6">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fa fa-plus"></i> Save
+                                </button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
