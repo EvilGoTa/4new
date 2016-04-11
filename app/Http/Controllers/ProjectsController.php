@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -131,14 +131,25 @@ class ProjectsController extends Controller
         //
     }
 
+    private function setReturn($data, $template, $template_data) {
+        if (Request::ajax()) {
+            return Response::json($data);
+        } else {
+            return view($template, $template_data);
+        }
+    }
+
     public function frontList() {
         $projects = Project::orderBy('created_at', 'asc')->get();
 
-        if (Request::ajax()) {
-            return Response::json($projects);
-        } else {
-            $view_data = [];
-            return view('front.project_list', $view_data);
-        }
+        $view_data = ['projects' => $projects];
+        return $this->setReturn($projects, 'front.project_list', $view_data);
+    }
+
+    public function frontShow($id) {
+        $project = Project::find($id);
+        $view_data = ['project' => $project];
+
+        return $this->setReturn($project, 'front.project_show', $view_data);
     }
 }

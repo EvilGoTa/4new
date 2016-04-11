@@ -59,7 +59,7 @@ class ProjectController extends Controller
         $bb_parser = new BBCodeParser();
 
         $project->title = $request->title;
-        $project->description = $bb_parser->parse($request->content, true);
+        $project->description = $bb_parser->parse($request->description, true);
 
         $user_id = Auth::id();
         $user = User::find($user_id);

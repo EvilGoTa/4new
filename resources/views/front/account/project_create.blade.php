@@ -19,11 +19,19 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label for="content" class="col-sm-3 control-label">Изображения</label>
+
+                            <div class="col-sm-6">
+                                @include('common.fileupload')
+                            </div>
+                        </div>
+
                         @push('scripts_bottom')
                         <script src="/js/wisibb/jquery.wysibb.min.js"></script>
                         <script>
                             $(function() {
-                                $("#project-content").wysibb();
+                                $("#project-description").wysibb();
                             })
                         </script>
                         @endpush
@@ -31,8 +39,9 @@
                         <div class="form-group">
                             <label for="content" class="col-sm-3 control-label">Содержание</label>
                         </div>
+
                         <div class="form-group" style="padding: 0px 20px">
-                            <textarea name="content" id="project-content" style="width: 100%; height: 400px"></textarea>
+                            <textarea name="description" id="project-description" style="width: 100%; height: 400px"></textarea>
                         </div>
 
                         <div class="form-group">

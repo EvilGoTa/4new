@@ -9,6 +9,8 @@
 
                 <div class="panel-body">
                     You are logged in!
+                    <br>
+                    <a href="/home/project">project...</a>
                 </div>
             </div>
         </div>

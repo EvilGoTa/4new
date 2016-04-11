@@ -4,7 +4,7 @@
 <style>
     tr form {
         float: left;
-    } 
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -25,7 +25,7 @@
                             <tbody>
                             @foreach($projects as $p)
                                 <tr>
-                                    <td><a href="{{-- route('project.show', ['project' => $p->id]) --}}">{{ $p->title }}</a></td>
+                                    <td><a href="{{ route('project_show', $p->id) }}">{{ $p->title }}</a></td>
                                     <td>{{ $p->created_at }}</td>
                                     <td class="actions">
                                         <form action="{{-- route('project.show', ['project' => $p->id]) --}}" method="GET">

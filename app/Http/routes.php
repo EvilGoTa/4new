@@ -1,8 +1,5 @@
 <?php
 
-use App\Role;
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -31,7 +28,14 @@ Route::group(['middleware' => ['web']], function () {
         return view('welcome');
     });
 
-    Route::get('/project', 'ProjectsController@front_list');
+    Route::get('/project', [
+        'as' => 'project_list',
+        'uses' => 'ProjectsController@frontList'
+    ]);
+    Route::get('/project/{project}', [
+        'as' => 'project_show',
+        'uses' => 'ProjectsController@frontShow'
+    ]);
 });
 
 /* Auth */
