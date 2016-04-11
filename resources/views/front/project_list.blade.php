@@ -4,6 +4,8 @@
     <style>
         .row .project-thumb {
             margin-left: 10px;
+            margin-bottom: 10px;
+            padding: 5px;
         }
         .row .project-thumb:first-child {
             margin-left: 0px;
@@ -21,8 +23,10 @@
                         </div>
                         <div class="row">
                     @endif
-                    <div class="col-md-3 project-thumb">
-                        <a href="{{ route('project_show', $p->id) }}">{{ $p->title }}</a>
+                    <div class="col-md-3">
+                        <div class="project-thumb">
+                            <a href="{{ route('project_show', $p->id) }}">{{ $p->title }}</a>
+                        </div>
                     </div>
                 @endforeach
                 </div>
