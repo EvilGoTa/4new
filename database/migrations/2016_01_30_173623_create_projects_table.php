@@ -17,6 +17,8 @@ class CreateProjectsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('title')->unique();
             $table->text('description');
+            $table->string('adress');
+            $table->string('phone');
             $table->timestamps();
         });
     }

@@ -11,6 +11,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
+use Validator;
+
 class ProjectController extends Controller
 {
     private $page = [
@@ -18,6 +20,20 @@ class ProjectController extends Controller
         'top_info' => 'Your projects here',
     ];
     private $redirectTo = '/home/project/';
+
+
+    private function prepareProjectInput(Request $request, Project $project) {
+        $bb_parser = new BBCodeParser();
+
+        $project->title = $request->title;
+        $project->description = $bb_parser->parse($request->description, true);
+        $project->adress = $request->adress;
+        $phone = implode(',', $request->phone);
+        $project->phone = $phone;
+
+        return $project;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -55,11 +71,21 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $project = new Project;
-        $bb_parser = new BBCodeParser();
+        $validator = Validator::make($request->all(), [
+            'title'         => 'required|unique:projects',
+            'description'   => 'required',
+            'adress'        => 'required',
+            'phone'         => 'required',
+        ]);
 
-        $project->title = $request->title;
-        $project->description = $bb_parser->parse($request->description, true);
+        if ($validator->fails()) {
+            return redirect($this->redirectTo.'create')
+                ->withInput()
+                ->withErrors($validator);
+        }
+
+        $project = new Project;
+        $project = $this->prepareProjectInput($request, $project);
 
         $user_id = Auth::id();
         $user = User::find($user_id);
@@ -87,7 +113,10 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        $project = Project::find($id);
+        return view('front.account.project_create', [
+            'project' => $project,
+        ]);
     }
 
     /**
@@ -99,7 +128,28 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title'         => 'required|unique:projects,title, '.$id,
+            'description'   => 'required',
+            'adress'        => 'required',
+            'phone'         => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            dd($this->redirectTo.$id);
+            return redirect($this->redirectTo.$id)
+                ->withInput()
+                ->withErrors($validator);
+        }
+
+        $project = Project::find($id);
+        $project = $this->prepareProjectInput($request, $project);
+
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+        $user->projects()->save($project);
+
+        return redirect($this->redirectTo);
     }
 
     /**
@@ -110,6 +160,7 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Project::destroy($id);
+        return redirect($this->redirectTo);
     }
 }

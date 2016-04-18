@@ -105,8 +105,9 @@
         </td>
         <td>
             <p class="name">
+                <input type="hidden" name="image[]" value="{%=file.url%}">
                 {% if (file.url) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                    <input type="text" value="{%=file.url%}">
                 {% } else { %}
                     <span>{%=file.name%}</span>
                 {% } %}

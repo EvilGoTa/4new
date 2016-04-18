@@ -8,14 +8,19 @@
                 <div class="panel-heading">Creating new project</div>
 
                 <div class="panel-body">
-                    <form id="project-form" action="{{ url('home/project/') }}" method="POST" class="form-horizontal">
+                    @if (isset($project))
+                        <form id="project-form" action="{{ route('home.project.update', ['id' => $project->id]) }}" method="POST" class="form-horizontal">
+                            {!! method_field('PATCH') !!}
+                    @else
+                        <form id="project-form" action="{{ route('home.project.store') }}" method="POST" class="form-horizontal">
+                    @endif
                         {!! csrf_field() !!}
 
                         <div class="form-group">
                             <label for="title" class="col-sm-3 control-label">Название</label>
 
                             <div class="col-sm-6">
-                                <input type="text" name="title" id="project-name" class="form-control">
+                                <input type="text" name="title" id="project-name" class="form-control" value="{{ $project->title or old('title') }}">
                             </div>
                         </div>
 
@@ -31,7 +36,7 @@
                         <script src="/js/wisibb/jquery.wysibb.min.js"></script>
                         <script>
                             $(function() {
-                                $("#project-description").wysibb();
+                                window.wisibb = $("#project-description").wysibb();
                             })
                         </script>
                         @endpush
@@ -41,7 +46,50 @@
                         </div>
 
                         <div class="form-group" style="padding: 0px 20px">
-                            <textarea name="description" id="project-description" style="width: 100%; height: 400px"></textarea>
+                            <textarea name="description" id="project-description" style="width: 100%; height: 400px">{{ old('description') }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adress" class="col-sm-3 control-label">Адрес</label>
+
+                            <div class="col-sm-6">
+                                <input type="text" name="adress" id="project-adress" class="form-control" value="{{ $project->adress or  old('adress') }}">
+                                @if (isset($project->description))
+                                    @push('scripts_bottom')
+                                    <script>
+                                        $(function() {
+                                            window.wisibb.htmlcode('{!! $project->description !!}');
+                                        });
+                                    </script>
+                                    @endpush
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" class="col-sm-3 control-label">Телефон</label>
+
+                            <div class="col-sm-6" >
+                                <div id="phone-container">
+                                    <input type="text" name="phone[]"  class="form-control" value="">
+                                </div>
+                                <a class="btn btn-default" onclick="add_phone()">
+                                    <i class="fa fa-plus"></i> Add phone
+                                </a>
+
+                                @push('scripts_bottom')
+                                <script>
+                                    function add_phone() {
+                                        var sample = $('#phone-container input:first');
+                                        console.log(sample[0].outerHTML);
+                                        console.log('!!!');
+                                        $('#phone-container').append(sample[0].outerHTML+'<br>');
+                                        console.log('test');
+                                        return false;
+                                    }
+                                </script>
+                                @endpush
+                            </div>
                         </div>
 
                         <div class="form-group">

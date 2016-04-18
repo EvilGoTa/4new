@@ -28,12 +28,12 @@
                                     <td><a href="{{ route('project_show', $p->id) }}">{{ $p->title }}</a></td>
                                     <td>{{ $p->created_at }}</td>
                                     <td class="actions">
-                                        <form action="{{-- route('project.show', ['project' => $p->id]) --}}" method="GET">
-                                            {!! csrf_field() !!}
-                                            <button type="submit" class="btn btn-default" title="Посмотреть">
-                                                <i class="fa fa-eye"></i>
-                                            </button>
-                                        </form>
+                                        {{--<form action=" route('project.show', ['project' => $p->id]) " method="GET">--}}
+                                            {{--{!! csrf_field() !!}--}}
+                                            {{--<button type="submit" class="btn btn-default" title="Посмотреть">--}}
+                                                {{--<i class="fa fa-eye"></i>--}}
+                                            {{--</button>--}}
+                                        {{--</form>--}}
                                         <form action="{{ route('home.project.edit', ['project' => $p->id]) }}" method="GET">
                                             {!! csrf_field() !!}
 
@@ -41,7 +41,9 @@
                                                 <i class="fa fa-edit"></i>
                                             </button>
                                         </form>
-                                        <form action="{{ route('home.project.destroy', ['project' => $p->id]) }}" method="GET">
+                                        <form action="{{ route('home.project.destroy', ['project' => $p->id]) }}" method="POST">
+                                            {!! csrf_field() !!}
+                                            {!! method_field('DELETE') !!}
                                             <button type="submit" class="btn btn-default" title="Удалить">
                                                 <i class="fa fa-trash"></i>
                                             </button>
