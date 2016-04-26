@@ -36,6 +36,10 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'project_show',
         'uses' => 'ProjectsController@frontShow'
     ]);
+    Route::get('/project/{project}/rate/{updown}', [
+        'as' => 'project_rate',
+        'uses' => 'ProjectsController@rateProject'
+    ]);
 });
 
 /* Auth */

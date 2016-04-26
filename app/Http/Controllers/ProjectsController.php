@@ -8,8 +8,11 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Project;
 use App\User;
+use App\Rating;
 use Illuminate\Http\Response;
 use Validator;
+use Auth;
+use DB;
 
 class ProjectsController extends Controller
 {
@@ -148,8 +151,53 @@ class ProjectsController extends Controller
 
     public function frontShow($id) {
         $project = Project::find($id);
-        $view_data = ['project' => $project];
+
+        $rating_plus = Rating::where('project_id', '=', $id)->where('direction', '=', 1)->sum('value');
+        $rating_minus = Rating::where('project_id', '=', $id)->where('direction', '=', -1)->sum('value');
+        $rating_value = $rating_plus - $rating_minus;
+
+        $rated = (bool)Rating::where('project_id', '=', $id)->where('user_id', '=', Auth::id())->count();
+//        dd($rated);
+        $view_data = [
+            'project' => $project,
+            'rating_value' => $rating_value,
+            'rated' => $rated,
+        ];
 
         return $this->setReturn($project, 'front.project_show', $view_data);
+    }
+    
+    public function rateProject($id, $updown) {
+        $project = Project::find($id);
+        $user = User::find(Auth::id());
+        $userID = Auth::id();
+
+//        $rateBefore = Project::with(['rates' => function($query) use ($userID) {
+//            $query->where('ratings.user_id', '=', $userID);
+//        }])->get()->toArray();
+
+        $rateBefore = Project::whereHas('rates', function($query) use ($userID, $id) {
+            $query->where('ratings.user_id', '=', $userID)->where('ratings.project_id', '=', $id);
+        })->get()->toArray();
+
+        if (count($rateBefore) > 0) {
+            return redirect('/project/'.$id);
+        }
+
+        if ($updown == 'up') {
+            $value = $user->role()->first()->rating_plus;
+        } else {
+            $value = $user->role()->first()->rating_minus;
+        }
+
+        $rating = new Rating;
+        $rating->user_id = $user->id;
+        $rating->value = $value;
+        $rating->direction = $updown == 'up'?1:-1;
+
+//        dd($rating);
+
+        $project->rates()->save($rating);
+        return redirect('/project/'.$id);
     }
 }

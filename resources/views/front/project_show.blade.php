@@ -34,6 +34,24 @@
                 </div>
                 <div id="comments" style="display: none">comments</div>
             </div>
+            <div class="col-md-12 spacer"></div>
+            <div class="col-md-12 text-center">
+                @if ($rated)
+                    {{--*/ $disabled = 'disabled' /*--}}
+                @else
+                    {{--*/ $disabled = '' /*--}}
+                @endif
+                <div class="col-md-4">
+                    <a class="btn btn-primary btn-block {{ $disabled }}" href="{{ route('project_rate', ['project' => $project->id, 'updown' => 'up']) }}">+</a>
+                </div>
+                <div class="col-md-4">
+                    <h4>{{ $rating_value }}</h4>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-danger btn-block {{ $disabled }}" href="{{ route('project_rate', ['project' => $project->id, 'updown' => 'down']) }}">-</a>
+                </div>
+            </div>
+            <div class="col-md-12 spacer"></div>
             @push('scripts_bottom')
             <script>
                 $('#project-tabs li[role="presentation"] a').on('click', function(e) {
