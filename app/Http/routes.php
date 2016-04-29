@@ -38,6 +38,7 @@ Route::group(['middleware' => ['web']], function () {
     ]);
     Route::get('/project/{project}/rate/{updown}', [
         'as' => 'project_rate',
+        'middleware' => 'auth',
         'uses' => 'ProjectsController@rateProject'
     ]);
 });

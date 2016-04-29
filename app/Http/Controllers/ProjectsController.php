@@ -19,6 +19,11 @@ class ProjectsController extends Controller
     private $activeTab = 'projects';
     private $redirectTo = '/admin/projects';
 
+    public function __construct()
+    {
+//        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -171,10 +176,6 @@ class ProjectsController extends Controller
         $project = Project::find($id);
         $user = User::find(Auth::id());
         $userID = Auth::id();
-
-//        $rateBefore = Project::with(['rates' => function($query) use ($userID) {
-//            $query->where('ratings.user_id', '=', $userID);
-//        }])->get()->toArray();
 
         $rateBefore = Project::whereHas('rates', function($query) use ($userID, $id) {
             $query->where('ratings.user_id', '=', $userID)->where('ratings.project_id', '=', $id);
