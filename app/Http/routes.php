@@ -41,6 +41,9 @@ Route::group(['middleware' => ['web']], function () {
         'middleware' => 'auth',
         'uses' => 'ProjectsController@rateProject'
     ]);
+
+    /* тест апишки приложения */
+    Route::get('/app_server/{action}/{id}', 'AppServerController@index');
 });
 
 /* Auth */
