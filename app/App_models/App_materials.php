@@ -14,4 +14,8 @@ use Illuminate\Database\Eloquent\Model;
 class App_materials extends Model
 {
     protected $table = 'app_materials';
+
+    public function blocks() {
+        return $this->belongsToMany(App_blocks::class, 'app_material_block');
+    }
 }

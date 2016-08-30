@@ -15,4 +15,7 @@ class App_users extends Model
 {
     protected $table = 'app_users';
 
+    public function sets() {
+        return $this->belongsToMany(App_users::class, 'app_user_set');
+    }
 }
