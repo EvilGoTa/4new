@@ -1,8 +1,5 @@
 <?php
 
-use App\Role;
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -31,7 +28,22 @@ Route::group(['middleware' => ['web']], function () {
         return view('welcome');
     });
 
-    Route::get('/project', 'ProjectsController@front_list');
+    Route::get('/project', [
+        'as' => 'project_list',
+        'uses' => 'ProjectsController@frontList'
+    ]);
+    Route::get('/project/{project}', [
+        'as' => 'project_show',
+        'uses' => 'ProjectsController@frontShow'
+    ]);
+    Route::get('/project/{project}/rate/{updown}', [
+        'as' => 'project_rate',
+        'middleware' => 'auth',
+        'uses' => 'ProjectsController@rateProject'
+    ]);
+
+    /* тест апишки приложения */
+    Route::get('/app_server/{action}/{id}', 'AppServerController@index');
 });
 
 /* Auth */
@@ -40,6 +52,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
+
+    Route::resource('/home/project', 'front\account\ProjectController');
 });
 
 /* Admin panel routes */
