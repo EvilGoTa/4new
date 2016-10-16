@@ -15,7 +15,9 @@
         "symfony/css-selector": "2.8.*|3.0.*",
         "symfony/dom-crawler": "2.8.*|3.0.*",
         "cartalyst/sentry": "2.0.*",
-        "laracasts/generators": "^1.1"
+        "laracasts/generators": "^1.1",
+        "golonka/bbcodeparser": "2.2.*",
+        "blueimp/jquery-file-upload": "9.12.*"
     },
     "autoload": {
         "classmap": [

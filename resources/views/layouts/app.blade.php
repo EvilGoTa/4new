@@ -14,6 +14,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
+    <link href="/css/common.css" rel="stylesheet">
+
     <style>
         @import "http://webfonts.ru/import/arnamu.css";
 
@@ -98,6 +100,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="/js/react/react.js"></script>
     <script src="/js/react/react-dom.js"></script>
+    @stack('scripts_bottom')
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>

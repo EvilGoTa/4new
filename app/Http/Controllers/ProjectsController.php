@@ -2,19 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Project;
 use App\User;
+use App\Rating;
 use Illuminate\Http\Response;
 use Validator;
+use Auth;
+use DB;
 
 class ProjectsController extends Controller
 {
     private $activeTab = 'projects';
     private $redirectTo = '/admin/projects';
+
+    public function __construct()
+    {
+//        $this->middleware('auth');
+    }
 
     /**
      * Display a listing of the resource.
@@ -131,14 +139,66 @@ class ProjectsController extends Controller
         //
     }
 
+    private function setReturn($data, $template, $template_data) {
+        if (Request::ajax()) {
+            return Response::json($data);
+        } else {
+            return view($template, $template_data);
+        }
+    }
+
     public function frontList() {
         $projects = Project::orderBy('created_at', 'asc')->get();
 
-        if (Request::ajax()) {
-            return Response::json($projects);
-        } else {
-            $view_data = [];
-            return view('front.project_list', $view_data);
+        $view_data = ['projects' => $projects];
+        return $this->setReturn($projects, 'front.project_list', $view_data);
+    }
+
+    public function frontShow($id) {
+        $project = Project::find($id);
+
+        $rating_plus = Rating::where('project_id', '=', $id)->where('direction', '=', 1)->sum('value');
+        $rating_minus = Rating::where('project_id', '=', $id)->where('direction', '=', -1)->sum('value');
+        $rating_value = $rating_plus - $rating_minus;
+
+        $rated = (bool)Rating::where('project_id', '=', $id)->where('user_id', '=', Auth::id())->count();
+//        dd($rated);
+        $view_data = [
+            'project' => $project,
+            'rating_value' => $rating_value,
+            'rated' => $rated,
+        ];
+
+        return $this->setReturn($project, 'front.project_show', $view_data);
+    }
+    
+    public function rateProject($id, $updown) {
+        $project = Project::find($id);
+        $user = User::find(Auth::id());
+        $userID = Auth::id();
+
+        $rateBefore = Project::whereHas('rates', function($query) use ($userID, $id) {
+            $query->where('ratings.user_id', '=', $userID)->where('ratings.project_id', '=', $id);
+        })->get()->toArray();
+
+        if (count($rateBefore) > 0) {
+            return redirect('/project/'.$id);
         }
+
+        if ($updown == 'up') {
+            $value = $user->role()->first()->rating_plus;
+        } else {
+            $value = $user->role()->first()->rating_minus;
+        }
+
+        $rating = new Rating;
+        $rating->user_id = $user->id;
+        $rating->value = $value;
+        $rating->direction = $updown == 'up'?1:-1;
+
+//        dd($rating);
+
+        $project->rates()->save($rating);
+        return redirect('/project/'.$id);
     }
 }

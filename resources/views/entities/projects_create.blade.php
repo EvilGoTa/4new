@@ -18,14 +18,14 @@
                     <label for="title" class="col-sm-3 control-label">Название</label>
 
                     <div class="col-sm-6">
-                        <input type="text" name="title" id="project-name" class="form-control">
+                        <input type="text" name="title" id="project-name" class="form-control" value="{{ old('title') }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="description" class="col-sm-3 control-label">Описание</label>
 
                     <div class="col-sm-6">
-                        <textarea name="description" id="project-description" class="form-control"></textarea>
+                        <textarea name="description" id="project-description" class="form-control">{{ old('description') }}</textarea>
                     </div>
                 </div>
 
