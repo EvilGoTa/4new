@@ -1,6 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
+        <!-- works -->
+<div id="works"  class=" clearfix grid">
+    @foreach($projects as $key => $p)
+        <figure class="effect-oscar  wowload fadeIn">
+            <img src="{{ $p->title_image or '/theme/images/portfolio/6.jpg' }}" alt="img01"/>
+            <figcaption>
+                <h2>{{ $p->title }}</h2>
+                <p>{{ $p->brief_description }}<br>
+                    <a href="{{ route('project_show', $p->id) }}" title="1">Смотреть ещё</a></p>
+            </figcaption>
+        </figure>
+    @endforeach
+</div>
+@push('scripts_bottom')
+<script src="/theme/assets/wow/wow.min.js"></script>
+<script src="/theme/assets/mobile/touchSwipe.min.js"></script>
+<script src="/theme/assets/respond/respond.js"></script>
+<script src="/theme/assets/script.js"></script>
+@endpush
+<!-- works -->
+    {{-- старая версия
     <style>
         .row .project-thumb {
             margin-left: 10px;
@@ -33,4 +54,5 @@
             </div>
         </div>
     </div>
+    --}}
 @endsection

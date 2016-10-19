@@ -32,7 +32,6 @@ class ProjectsController extends Controller
     public function index()
     {
         $projects = Project::orderBy('created_at', 'asc')->get();
-
         return view('entities.projects', [
             'projects' => $projects,
             'top_header' => 'Проекты',

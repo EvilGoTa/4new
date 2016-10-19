@@ -14,7 +14,13 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
-    <link href="/css/common.css" rel="stylesheet">
+    <!-- animate.css -->
+    <link rel="stylesheet" href="/theme/assets/animate/animate.css" />
+    <link rel="stylesheet" href="/theme/assets/animate/set.css" />
+
+    <link rel="stylesheet" href="/theme/assets/style.css">
+
+    <link rel="stylesheet" href="/css/common.css">
 
     <style>
         @import "http://webfonts.ru/import/arnamu.css";
@@ -29,6 +35,49 @@
     </style>
 </head>
 <body id="app-layout">
+<div class="topbar animated fadeInLeftBig"></div>
+<!-- Header Starts -->
+<div class="navbar-wrapper">
+    <div class="container">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation" id="top-nav">
+            <div class="container">
+                <div class="navbar-header">
+
+                    <!-- Logo Starts -->
+                    <a class="navbar-brand" href="/">4new</a>
+                    <!-- #Logo Ends -->
+
+
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <!-- Nav Starts -->
+                <div class="navbar-collapse  collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li ><a href="/">Все</a></li>
+                        <li ><a href="/project">Проекты</a></li>
+                        <li ><a href="/blog">Блог</a></li>
+                        <li ><a href="/service">Услуги</a></li>
+                        <li ><a href="/job">Вакансии</a></li>
+                        <li ><a href="/personnel">Кадры</a></li>
+                    </ul>
+                </div>
+                <!-- #Nav Ends -->
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- #Header Starts -->
+
+{{--  старая версия хедера
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
@@ -92,6 +141,7 @@
         @endif
         </div>
     </nav>
+--}}
 
     @yield('content')
 
