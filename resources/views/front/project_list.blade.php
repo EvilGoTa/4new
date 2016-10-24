@@ -14,12 +14,6 @@
         </figure>
     @endforeach
 </div>
-@push('scripts_bottom')
-<script src="/theme/assets/wow/wow.min.js"></script>
-<script src="/theme/assets/mobile/touchSwipe.min.js"></script>
-<script src="/theme/assets/respond/respond.js"></script>
-<script src="/theme/assets/script.js"></script>
-@endpush
 <!-- works -->
     {{-- старая версия
     <style>

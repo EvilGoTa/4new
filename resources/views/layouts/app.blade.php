@@ -61,11 +61,30 @@
                 <div class="navbar-collapse  collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li ><a href="/">Все</a></li>
+
                         <li ><a href="/project">Проекты</a></li>
                         <li ><a href="/blog">Блог</a></li>
                         <li ><a href="/service">Услуги</a></li>
                         <li ><a href="/job">Вакансии</a></li>
                         <li ><a href="/personnel">Кадры</a></li>
+                        @if (Auth::guest())
+                            <li><a href="{{ url('/login') }}">Login</a></li>
+                            <li><a href="{{ url('/register') }}">Register</a></li>
+                        @else
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    {{ Auth::user()->first_name }} <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    @if (Auth::user()->isAdmin())
+                                        <li><a href="{{ url('/admin/dashboard') }}"><i class="fa fa-btn fa-sign-out"></i>Панель администратора</a></li>
+                                    @endif
+                                    <li><a href="{{ url('/home') }}"><i class="fa fa-btn fa-sign-out"></i>Мой кабинет</a></li>
+                                    <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Выход</a></li>
+                                </ul>
+                            </li>
+                        @endif
                     </ul>
                 </div>
                 <!-- #Nav Ends -->
@@ -150,6 +169,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="/js/react/react.js"></script>
     <script src="/js/react/react-dom.js"></script>
+    <!-- Theme scripts -->
+    <script src="/theme/assets/wow/wow.min.js"></script>
+    <script src="/theme/assets/mobile/touchSwipe.min.js"></script>
+    <script src="/theme/assets/respond/respond.js"></script>
+    <script src="/theme/assets/script.js"></script>
+
     @stack('scripts_bottom')
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
