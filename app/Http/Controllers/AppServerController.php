@@ -12,7 +12,6 @@ namespace App\Http\Controllers;
 use App\App_models\App_blocks;
 use App\App_models\App_materials;
 use App\App_models\App_users;
-use App\App_sets;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
@@ -47,13 +46,6 @@ class AppServerController extends Controller
         'set_status'    => ['published'],
         'set_author'    => ['author_id'],
         'set_set'       => ['set_id'],
-    ];
-
-    protected $set_actions = [
-        'create'        => ['name', 'text', 'author_id'],
-        'set_photo'     => ['photo'],
-        'add_author'    => ['author_id'],
-        'remove_author' => ['author_id'],
     ];
 
 //    protected $
@@ -298,7 +290,7 @@ class AppServerController extends Controller
         return $material->author;
     }
 
-    private function post_set_set($id, $params) {
+    private function post_set_set($id, $param) {
         $pv = $this->getParamVals($params);
         $material = App_materials::find($id);
         $material->set_id = $pv['set_id'];
@@ -306,7 +298,7 @@ class AppServerController extends Controller
         return 'ok';
     }
 
-    private function user_inc_rating($id, $params) {
+    private function user_inc_rating($id, $param) {
         $pv = $this->getParamVals($params);
         $user = App_users::find($id);
         $user->rating++;
@@ -314,44 +306,15 @@ class AppServerController extends Controller
         return $user->rating;
     }
 
-    private function user_last_post($id, $params) {
+    private function user_last_post($id, $param) {
         $pv = $this->getParamVals($params);
         if (isset($pv['set_id'])) {
-            $material = App_materials::where('author', '$id')->where('set_id', $pv['set_id']);
+            $material = App_materials::where('author = '.$id.' AND set_id = '.$pv['set_id']);
         } else {
             $material = App_materials::where('author = '.$id);
         }
         $material->orderBy('created_at', 'desc')->first();
         return $material->id;
-    }
-
-
-    private function set_create($id, $params) {
-        $pv = $this->getParamVals($params);
-        $set = new App_sets();
-        $set->name = $pv['name'];
-        $set->text = $pv['text'];
-        $set->admin_id = $pv['author_id'];
-        $set->save();
-        return $set->id;
-    }
-
-    private function set_set_photo($id, $params) {
-        $pv = $this->getParamVals($params);
-    }
-
-    private function set_add_author($id, $params) {
-        $pv = $this->getParamVals($params);
-        $set = App_sets::find($id);
-        $set->users()->attach($id);
-        return 'ok';
-    }
-
-    private function set_remove_author($id, $params) {
-        $pv = $this->getParamVals($params);
-        $set = App_sets::find($id);
-        $set->users()->detach($id);
-        return 'ok';
     }
     
     // private function action_last($id) {

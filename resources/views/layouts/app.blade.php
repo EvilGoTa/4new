@@ -60,6 +60,26 @@
                 <!-- Nav Starts -->
                 <div class="navbar-collapse  collapse">
                     <ul class="nav navbar-nav navbar-right">
+                        <li >
+                            <a href="#" class="search-toggle">
+                                <i class="fa fa-search"></i>
+                                <div class="search-box hidden ">
+                                    <form style="display: inline" action="/search" method="GET">
+                                        <input type="text" name="q">
+                                    </form>
+                                </div>
+                            </a>
+                            @push('scripts_bottom')
+                            <script>
+                                $('.search-toggle').on('click', function() {
+                                    $('.search-box').toggleClass('hidden')
+                                })
+                                $('.search-box input').on('click', function(e) {
+                                    e.stopPropagation();
+                                })
+                            </script>
+                            @endpush
+                        </li>
                         <li ><a href="/">Все</a></li>
 
                         <li ><a href="/project">Проекты</a></li>
@@ -86,6 +106,8 @@
                             </li>
                         @endif
                     </ul>
+
+
                 </div>
                 <!-- #Nav Ends -->
 

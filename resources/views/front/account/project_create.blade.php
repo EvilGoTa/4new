@@ -25,6 +25,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="title" class="col-sm-3 control-label">Краткое описание</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="title" id="project-вуыскшзешщт" class="form-control" value="{{ $project->description or old('description') }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="content" class="col-sm-3 control-label">Изображения</label>
 
                             <div class="col-sm-6">

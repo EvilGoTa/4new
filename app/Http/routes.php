@@ -28,6 +28,11 @@ Route::group(['middleware' => ['web']], function () {
         return view('welcome');
     });
 
+    Route::get('/search', [
+        'as' => 'search_page',
+        'uses' => 'SearchController@index'
+    ]);
+
     Route::get('/project', [
         'as' => 'project_list',
         'uses' => 'ProjectsController@frontList'

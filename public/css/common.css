@@ -5,3 +5,22 @@ body > .container {
 .spacer {
     padding: 10px;
 }
+
+.search-box.hidden input {
+    width: 0px;
+}
+
+.search-box input {
+    width: 100px;
+    transition: width 1s ease-out 0.5s;
+}
+
+.search-box {
+    display: inline;
+}
+
+.search-box input {
+    height: 25px;
+    outline: none;
+    width: 200px;
+}
