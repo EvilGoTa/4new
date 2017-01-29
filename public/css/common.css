@@ -2,6 +2,10 @@ body > .container {
     padding-top: 105px;
 }
 
+.fa-btn {
+    margin-right: 6px;
+}
+
 .spacer {
     padding: 10px;
 }

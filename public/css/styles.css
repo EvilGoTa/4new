@@ -1,0 +1,45 @@
+@import url(../fonts/OpenSans/OpenSans.css);
+html {
+  height: 100%; }
+
+body {
+  height: 100%;
+  font-family: OpenSans, sans-serif;
+  font-size: 18px;
+  font-weight: normal; }
+
+.navbar-default {
+  background-color: white;
+  -webkit-box-shadow: 1px 1px 13px -1px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 1px 1px 13px -1px rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 1px 13px -1px rgba(0, 0, 0, 0.25); }
+
+.left-menu.hidden-mw {
+  max-width: 0px;
+  padding: 0px; }
+
+.left-menu {
+  -webkit-box-shadow: 1px 1px 13px -1px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 1px 1px 13px -1px rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 1px 13px -1px rgba(0, 0, 0, 0.25);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 600px;
+  max-width: 600px;
+  overflow-x: hidden;
+  padding: 30px;
+  z-index: 2000;
+  background-color: white;
+  transition: all 0.2s ease-out; }
+
+.close-button {
+  position: absolute;
+  right: 4px;
+  top: 0px;
+  display: inline-block; }
+  .close-button a {
+    color: black; }
+
+/*# sourceMappingURL=styles.css.map */
