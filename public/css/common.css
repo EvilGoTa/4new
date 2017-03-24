@@ -10,13 +10,10 @@ body > .container {
     padding: 10px;
 }
 
-.search-box.hidden input {
-    width: 0px;
-}
-
-.search-box input {
-    width: 100px;
-    transition: width 1s ease-out 0.5s;
+.search-box.hidden-mw input {
+    max-width: 0px;
+    padding: 0px;
+    border: none;
 }
 
 .search-box {
@@ -24,7 +21,18 @@ body > .container {
 }
 
 .search-box input {
-    height: 25px;
+    border: none;
+    border-bottom: 1px solid #777;
+    padding-left: 5px;
+    height: 20px;
     outline: none;
-    width: 200px;
+    width: 100%;
+    max-width: calc(100% - 50px);
+    transition: max-width .2s ease-out;
+}
+
+.left-menu .search-box input {
+    position: absolute;
+    height: 65%;
+    margin-left: 10px;
 }

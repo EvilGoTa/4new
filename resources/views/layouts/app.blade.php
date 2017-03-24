@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>{{ $page_title or 'SQRO.RU' }}</title>
 
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
@@ -31,13 +31,24 @@
     <div class="close-button">
         <a href="#" class="menu-toggle"><i class="fa fa-times" aria-hidden="true"></i></a>
     </div>
-    <ul>
+    <ul class="nav">
+        <li class="visible-xs-block">
+            <a href="#" class="search-toggle">
+                <i class="fa fa-search"></i>
+                <div class="search-box ">
+                    <form style="display: inline" action="/search" method="GET">
+                        <input type="text" name="q">
+                    </form>
+                </div>
+            </a>
+        </li>
         <li ><a href="/">Все</a></li>
         <li ><a href="/project">Проекты</a></li>
         <li ><a href="/blog">Блог</a></li>
         <li ><a href="/service">Услуги</a></li>
         <li ><a href="/job">Вакансии</a></li>
         <li ><a href="/personnel">Кадры</a></li>
+        @include('common/auth')
     </ul>
 </div>
 <div class="topbar animated fadeInLeftBig"></div>
@@ -49,36 +60,36 @@
                 <div class="navbar-header">
 
                     <!-- Logo Starts -->
-                    <a class="navbar-brand" href="/">4new</a>
+                    <a class="navbar-brand" href="/">SQRO.RU</a>
                     <a class="navbar-brand menu-toggle" href="#"><i class="fa fa-bars" aria-hidden="true"></i></a>
                     <!-- #Logo Ends -->
-
-
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
 
                 </div>
 
                 <!-- Nav Starts -->
-                <div class="navbar-collapse  collapse">
+                <div class="hidden-xs">
                     <ul class="nav navbar-nav navbar-right">
+                        <li class="projects-counter">
+                            <span class="projects-count">
+                                {{ \App\Project::all()->count() }}</span><br>
+                            проектов
+                        </li>
+                        <li>
+                            <a href="{{ route('home.project.create') }}" class="share share-spec" style="line-height: 1.1em; font-weight: bold">Рассказать о<br>проекте</a>
+                        </li>
                         <li >
                             <a href="#" class="search-toggle">
-                                <i class="fa fa-search"></i>
-                                <div class="search-box hidden ">
+                                <div class="search-box hidden-hover">
+                                    <i class="fa fa-search"></i>
                                     <form style="display: inline" action="/search" method="GET">
-                                        <input type="text" name="q">
+                                        <input type="text" name="q" placeholder="что ищем?">
                                     </form>
                                 </div>
                             </a>
                             @push('scripts_bottom')
                             <script>
                                 $('.search-toggle').on('click', function() {
-                                    $('.search-box').toggleClass('hidden')
+                                    $('.search-box').toggleClass('hidden-hover')
                                 })
                                 $('.search-box input').on('click', function(e) {
                                     e.stopPropagation();
@@ -87,24 +98,7 @@
                             @endpush
                         </li>
 
-                        @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->first_name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    @if (Auth::user()->isAdmin())
-                                        <li><a href="{{ url('/admin/dashboard') }}"><i class="fa fa-btn fa-sign-out"></i>Панель администратора</a></li>
-                                    @endif
-                                    <li><a href="{{ url('/home') }}"><i class="fa fa-btn fa-sign-out"></i>Мой кабинет</a></li>
-                                    <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Выход</a></li>
-                                </ul>
-                            </li>
-                        @endif
+                        @include('common/auth')
                     </ul>
 
 
@@ -113,9 +107,13 @@
 
             </div>
         </div>
-
+        <div class="nav nav-bar navbar-default submenu head-padded">
+            @yield('submenu')
+        </div>
     </div>
 </div>
+@yield('pagebutton')
+
 <!-- #Header Starts -->
 
     @yield('content')
@@ -129,5 +127,6 @@
 
     @stack('scripts_bottom')
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+<!-- Yandex.Metrika counter --> <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter42871689 = new Ya.Metrika({ id:42871689, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/42871689" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
 </body>
 </html>

@@ -31,7 +31,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $projects = Project::orderBy('created_at', 'asc')->get();
+        $projects = Project::orderBy('created_at', 'desc')->get();
         return view('entities.projects', [
             'projects' => $projects,
             'top_header' => 'Проекты',
@@ -112,7 +112,7 @@ class ProjectsController extends Controller
      */
     public function edit($id)
     {
-        //
+        dd('edit');
     }
 
     /**
@@ -146,10 +146,49 @@ class ProjectsController extends Controller
         }
     }
 
-    public function frontList() {
-        $projects = Project::orderBy('created_at', 'asc')->get();
+    /**
+     * @param null $sort
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function frontList($sort = null) {
+        $projects = Project::with('rates')->orderBy('created_at', 'desc')->get();
+        $sortName = null;
+        if (isset($sort)) {
+            switch($sort) {
+                case 'top-today' :
+                    $sortName = 'Топ за сегодня';
+                    $ids = DB::select("SELECT GROUP_CONCAT(id) as ids FROM (SELECT * FROM (SELECT p.id, p.title, COALESCE(SUM(r_plus.value), 0) - COALESCE(SUM(r_minus.value), 0) AS rating FROM projects p
+LEFT JOIN ratings r_plus ON (p.id = r_plus.project_id AND r_plus.direction = 1)
+LEFT JOIN ratings r_minus ON (p.id = r_minus.project_id AND r_minus.direction = -1)
+WHERE p.created_at > DATE_ADD(CURDATE(), INTERVAL -1 DAY)
+GROUP BY p.id) tmp
+ORDER BY tmp.rating DESC) tmp");
+                    $projects = Project::with('rates')->whereIn('id', explode(',', $ids[0]->ids))->get();
+                    break;
+                case 'top-month' :
+                    $sortName = 'Топ за месяц';
+                    $ids = DB::select("SELECT GROUP_CONCAT(id) as ids FROM (SELECT * FROM (SELECT p.id, p.title, COALESCE(SUM(r_plus.value), 0) - COALESCE(SUM(r_minus.value), 0) AS rating FROM projects p
+LEFT JOIN ratings r_plus ON (p.id = r_plus.project_id AND r_plus.direction = 1)
+LEFT JOIN ratings r_minus ON (p.id = r_minus.project_id AND r_minus.direction = -1)
+WHERE p.created_at > DATE_ADD(CURDATE(), INTERVAL -1 MONTH)
+GROUP BY p.id) tmp
+ORDER BY tmp.rating DESC) tmp");
+                    $projects = Project::with('rates')->whereIn('id', explode(',', $ids[0]->ids))->get();
+                    break;
+                case 'top-alltime' :
+                    $sortName = 'Топ за всё время';
+                    $ids = DB::select("SELECT GROUP_CONCAT(id) as ids FROM (SELECT * FROM (SELECT p.id, p.title, COALESCE(SUM(r_plus.value), 0) - COALESCE(SUM(r_minus.value), 0) AS rating FROM projects p
+LEFT JOIN ratings r_plus ON (p.id = r_plus.project_id AND r_plus.direction = 1)
+LEFT JOIN ratings r_minus ON (p.id = r_minus.project_id AND r_minus.direction = -1)
+GROUP BY p.id) tmp
+ORDER BY tmp.rating DESC) tmp");
+                    $projects = Project::with('rates')->whereIn('id', explode(',', $ids[0]->ids))->orderByRaw('FIELD(id, '.$ids[0]->ids.')')->get();
+                    break;
+                default: dd('error404 handler here');
+            }
+        }
 
-        $view_data = ['projects' => $projects];
+        $view_data = ['projects' => $projects, 'sortName' => $sortName];
         return $this->setReturn($projects, 'front.project_list', $view_data);
     }
 

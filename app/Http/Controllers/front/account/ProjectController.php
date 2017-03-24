@@ -16,11 +16,15 @@ use Validator;
 class ProjectController extends Controller
 {
     private $page = [
-        'title' => 'Projects',
-        'top_info' => 'Your projects here',
+        'title' => 'Упрвление проектами',
+        'top_info' => 'Ваши проеты',
     ];
     private $redirectTo = '/home/project/';
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     private function prepareProjectInput(Request $request, Project $project) {
         $bb_parser = new BBCodeParser();
@@ -136,7 +140,6 @@ class ProjectController extends Controller
         ]);
 
         if ($validator->fails()) {
-            dd($this->redirectTo.$id);
             return redirect($this->redirectTo.$id)
                 ->withInput()
                 ->withErrors($validator);

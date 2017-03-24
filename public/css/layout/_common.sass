@@ -1,0 +1,109 @@
+html
+  height: 100%
+
+body
+  height: 100%
+  font-family: OpenSans, sans-serif
+  font-size: 18px
+  font-weight: normal
+
+a
+  color: $accent
+
+a:focus, a:hover
+  color: inherit
+  text-decoration: none
+
+// Стрелочка - перевёртыш
+.dropdown-toggle
+  i
+    transition: .1s ease-in-out
+
+.dropdown-toggle[aria-expanded=true]
+  i
+    transform: rotate(180deg)
+
+.row-list-fix
+  margin-right: 0px
+
+@media screen and (min-width: $md)
+  .row-list-fix
+    .col-md-4:nth-child(n+3)
+      padding-right: 0px!important
+
+@media screen and (min-width: $sm)
+  .row-list-fix
+    .col-sm-6:nth-child(n+2)
+      padding-right: 0px!important
+
+@media screen and (min-width: $xs)
+  .row-list-fix
+    .col-xs-12
+      padding-right: 0px!important
+
+// Летающая кнопка +Добавить
+.add-float:hover
+  width: 250px
+.add-float
+  z-index: 9999
+  width: 60px
+  position: fixed
+  bottom: 20px
+  right: 20px
+  background-color: $accent
+  overflow: hidden
+  border-radius: 40px
+  transition: width .3s
+
+  $size: 60px
+
+  .af-icon
+    position: relative
+    z-index: 2
+    width: $size
+    height: $size
+    text-align: center
+    line-height: 1.1em
+    font-size: 3em
+    color: $white
+    float: left
+
+  .af-caption
+    z-index: 1
+    position: absolute
+    overflow: hidden
+    font-size: 2em
+    background-color: $accent
+    padding-left: $size
+    padding-right: $size/2
+    line-height: 1.6em
+
+  a
+    color: white
+    text-decoration: none
+
+
+// Ghost-кнопка
+.ghost-btn
+  border: 1px solid $accent
+  color: $accent
+  padding: 7px 15px
+  padding-bottom: 10px
+  border-radius: 5px
+  text-decoration: none
+  display: inline-block
+
+.ghost-btn.wide
+  display: block
+
+.ghost-btn:hover
+  color: $accent
+
+
+// HOME раздел
+.row, .row-fluid
+  .chapter
+    text-align: center
+
+    i
+      color: $accent

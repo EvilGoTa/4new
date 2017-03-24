@@ -12,7 +12,7 @@
                             <i class="fa fa-user fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge">0</div>
+                            <div class="huge">{{ App\User::count() }}</div>
                             <div>Пользователей</div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                             <i class="fa fa-briefcase fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge">0</div>
+                            <div class="huge">{{ App\Project::count() }}</div>
                             <div>Проектов</div>
                         </div>
                     </div>

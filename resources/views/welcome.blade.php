@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('pagebutton')
+    @include('common.pagebuttonAddProject')
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">

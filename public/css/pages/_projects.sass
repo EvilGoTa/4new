@@ -1,0 +1,40 @@
+.projects-grid
+  .project-card
+    height: 300px
+    position: relative
+    +material_shadow
+
+    img
+      width: 100%
+
+    .project-content
+      padding: 10px
+
+      h2
+        font-size: 2em
+        margin-top: 10px
+        color: $white
+        font-weight: 900
+        text-transform: uppercase
+        +white-text
+        a
+          color: $white
+          +white-text
+      p
+        color: $white
+        +white-text
+
+    .project-rating
+      width: 100%
+      padding: 10px
+      position: absolute
+      bottom: 0
+      color: white
+      +white-text
+      a
+        text-decoration: none
+        color: $white
+
+.projects-grid>div
+  padding-bottom: 30px
+

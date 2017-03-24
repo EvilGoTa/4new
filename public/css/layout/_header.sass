@@ -1,0 +1,45 @@
+.navbar-default[role=navigation]
+  background-color: $white
+  border-color: $white
+  +material_shadow
+
+  .share
+    font-size: 0.8em
+    line-height: 1em
+    padding: 10px
+    &.share-spec
+      line-height: 1.1em
+      font-weight: bold
+
+.head-padded
+  margin-top: 50px
+
+.projects-counter
+  @extend .share
+
+  .projects-count
+    font-weight: 900
+    font-size: 1.3em
+
+.submenu
+  background-color: $white
+
+  li
+    a
+      font-size: .8em
+      padding: 10px
+
+@media screen and (max-width: $sm)
+  .menu-toggle
+    padding-left: 0px
+
+// поиск
+.search-box
+  overflow: hidden
+  display: block
+  width: 230px
+  +transition-mix(all, .3s, null)
+
+.hidden-hover
+  height: 20px
+  width: 20px

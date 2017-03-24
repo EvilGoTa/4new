@@ -14,7 +14,7 @@
 
                 <div class="panel-body">
                     <p>{{ $page['top_info'] }}</p>
-                    <a href="{{ route('home.project.create') }}">add...</a>
+                    <a class="ghost-btn" href="{{ route('home.project.create') }}">Добавить</a>
                     @if(count($projects) > 0)
                         <table class="table table-striped task-table">
                             <thead>

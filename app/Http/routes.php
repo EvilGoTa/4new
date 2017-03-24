@@ -33,7 +33,11 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'SearchController@index'
     ]);
 
-    Route::get('/project', [
+    Route::get('/project/sort/{sort?}', [
+        'as' => 'project_list_sort',
+        'uses' => 'ProjectsController@frontList'
+    ]);
+    Route::get('/project/', [
         'as' => 'project_list',
         'uses' => 'ProjectsController@frontList'
     ]);
